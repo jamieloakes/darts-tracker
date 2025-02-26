@@ -1,6 +1,5 @@
 import src.utils as utils
 
-
 def printOptionMenu() -> None:
     """
         Print option screen for practice games

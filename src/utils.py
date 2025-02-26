@@ -21,6 +21,7 @@ def insertMany(table:str, fields:tuple[str], data:list[tuple]) -> None:
         conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
         cursor:sqlite3.Cursor = conn.cursor()
 
+        # Supports inserting data into tables that have variable number of columns
         field_placeholder:str = ','.join(fields)
         value_placeholder:str = ','.join('?' * len(fields))
         cursor.executemany(f'INSERT INTO {table} ({field_placeholder}) VALUES ({value_placeholder})', data)
