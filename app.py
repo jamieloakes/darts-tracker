@@ -1,11 +1,12 @@
-from src import db_setup, menus
+import src.db_setup as db_setup
+import src.menus as menus
 
 if __name__ == '__main__':
     db_setup.setupDatabase()
 
     while True:
         try:
-            menus.printMenu()
+            menus.printOptionMenu()
             menu_choice:int = int(input('> '))
             print()
             match menu_choice:
@@ -22,6 +23,7 @@ if __name__ == '__main__':
                     # Quit
                     break
                 case _:
+                    # Invalid input
                     raise ValueError()
         except ValueError:
             print('Invalid option. Please try again.\n')
