@@ -1,4 +1,5 @@
-import src.utils as utils 
+import src.utils as utils
+
 
 def printOptionMenu() -> None:
     """
@@ -17,10 +18,20 @@ def singlesRtwMenu() -> None:
         Data capture menu for Round the World (Singles) practice game
     """
     today:str = utils.getTodaysDate()
-    data:list[tuple[str, str, int]] = [] 
-    for i in range(1,21):
-        attempts:int = int(input(f'S{i}: '))
-        data.append((today, f'S{i}', attempts))
+    data:list[tuple[str, str, int]] = []
+
+    target_count:int = 1
+    while target_count < 21:
+        try:
+            target:str = f'S{target_count}'
+            attempts:int = int(input(f'{target}: '))
+            data.append((today, target, attempts))
+            target_count += 1
+        except:
+            print('Invalid input. Please try again.')
+            continue
+    
+    utils.insertMany(table='singles_rtw', fields=('event_date', 'target', 'attempts'), data=data)
 
 if __name__ == '__main__':
     singlesRtwMenu()

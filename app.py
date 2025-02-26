@@ -11,8 +11,7 @@ if __name__ == '__main__':
             print()
             match menu_choice:
                 case 1:
-                    # Round the World (Singles)
-                    pass
+                    menus.singlesRtwMenu()
                 case 2:
                     # Round the World (Doubles)
                     pass

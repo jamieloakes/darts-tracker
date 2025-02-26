@@ -44,10 +44,19 @@ def setupDatabase() -> None:
 def __checkTables() -> None:
     conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
     cursor:sqlite3.Cursor = conn.cursor()
-    cursor.execute("""SELECT name FROM sqlite_master WHERE type='table';""")
+    cursor.execute("""SELECT name FROM sqlite_master WHERE type='table'""")
     print(cursor.fetchall())
+    conn.close()
+
+
+def __checkRecords(table:str) -> None:
+    conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
+    cursor:sqlite3.Cursor = conn.cursor()
+    cursor.execute(f'SELECT * FROM {table}')
+    print(cursor.fetchall())
+    conn.close()
 
 
 if __name__ == '__main__':
-    setupDatabase()
-    __checkTables()
+    #setupDatabase()
+    __checkRecords(table='singles_rtw')
