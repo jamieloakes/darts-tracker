@@ -26,7 +26,7 @@ def singlesRtwMenu() -> None:
         except:
             print('Invalid input. Please try again.')
             continue
-    
+    print()
     database.insertRecords(table='singles_rtw', fields=('event_date', 'target', 'attempts'), data=data)
 
 
@@ -45,7 +45,7 @@ def doublesRtwMenu() -> None:
         except:
             print('Invalid input. Please try again.')
             continue
-    
+    print()
     database.insertRecords(table='doubles_rtw', fields=('event_date', 'target', 'hits'), data=data)
 
 
@@ -66,5 +66,5 @@ def legsStatsMenu() -> None:
         except:
             print('Invalid input. Please try again.')
             continue
-
+    print()
     database.insertRecords(table='legs_stats', fields=('event_date', 'n_darts', 'avg', 'checkout_attempts', 'win'), data=data)
