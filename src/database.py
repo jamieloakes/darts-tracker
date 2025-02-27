@@ -58,8 +58,8 @@ def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
         field_placeholder:str = ','.join(fields)
         value_placeholder:str = ','.join('?' * len(fields))
         cursor.executemany(f'INSERT INTO {table} ({field_placeholder}) VALUES ({value_placeholder})', data)
-    finally:
         conn.commit()
+    finally:
         cursor.close()
 
 
