@@ -41,9 +41,10 @@ def setupDatabase() -> None:
     conn.close()
 
 
-def insertMany(table:str, fields:tuple[str], data:list[tuple]) -> None:
+def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
     """
-        Insert multiple records into database at once\n
+        Insert record into database\n
+        Supports inserting either a single record, or multiple records\n
         Params:
             table - Name of table to insert data into
             fields - Fields of table to be inserted
@@ -82,4 +83,4 @@ def __checkRecords(table:str) -> None:
 
 if __name__ == '__main__':
     #setupDatabase()
-    __checkRecords(table='doubles_rtw')
+    __checkRecords(table='legs_stats')

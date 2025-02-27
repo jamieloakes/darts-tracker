@@ -2,9 +2,7 @@ from modules import utils
 from src import database
 
 def printOptionMenu() -> None:
-    """
-        Print option screen for practice games
-    """
+    """ Display option screen for practice games """
     print('Select a practice game:')
     print('-------------------------------------')
     print('1: Round the World (Singles)')
@@ -14,9 +12,7 @@ def printOptionMenu() -> None:
 
 
 def singlesRtwMenu() -> None:
-    """
-        Data capture menu for Round the World (Singles) practice game
-    """
+    """ Data capture menu for Round the World (Singles) practice game """
     today:str = utils.getTodaysDate()
     data:list[tuple[str, str, int]] = []
 
@@ -31,13 +27,11 @@ def singlesRtwMenu() -> None:
             print('Invalid input. Please try again.')
             continue
     
-    database.insertMany(table='singles_rtw', fields=('event_date', 'target', 'attempts'), data=data)
+    database.insertRecords(table='singles_rtw', fields=('event_date', 'target', 'attempts'), data=data)
 
 
 def doublesRtwMenu() -> None:
-    """
-        Data capture menu for Round the World (Doubles) practice game
-    """
+    """ Data capture menu for Round the World (Doubles) practice game """
     today:str = utils.getTodaysDate()
     data:list[tuple[str, str, int]] = []
 
@@ -52,4 +46,25 @@ def doublesRtwMenu() -> None:
             print('Invalid input. Please try again.')
             continue
     
-    database.insertMany(table='doubles_rtw', fields=('event_date', 'target', 'hits'), data=data)
+    database.insertRecords(table='doubles_rtw', fields=('event_date', 'target', 'hits'), data=data)
+
+
+def legsStatsMenu() -> None:
+    """ Data capture menu for 501 practice game """
+    today:str = utils.getTodaysDate()
+    data:list[tuple[str, int, float, int, int]] = []
+
+    completed:bool = False
+    while completed == False:
+        try:
+            n_darts:int = int(input('n_darts: '))
+            avg:float = float(input('avg: '))
+            checkout_attempts:int = int(input('checkout_attempts: '))
+            win:int = int(input('win: '))
+            data.append((today, n_darts, avg, checkout_attempts, win))
+            completed = True
+        except:
+            print('Invalid input. Please try again.')
+            continue
+
+    database.insertRecords(table='legs_stats', fields=('event_date', 'n_darts', 'avg', 'checkout_attempts', 'win'), data=data)

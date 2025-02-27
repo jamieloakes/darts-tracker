@@ -14,12 +14,11 @@ if __name__ == '__main__':
                 case 2:
                     menus.doublesRtwMenu()
                 case 3:
-                    # 501
-                    pass
+                    menus.legsStatsMenu()
                 case 0:
                     break
                 case _:
-                    # Invalid input
+                    # Raise ValueError if invalid input
                     raise ValueError()
         except ValueError:
             print('Invalid option. Please try again.\n')
