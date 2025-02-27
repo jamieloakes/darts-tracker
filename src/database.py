@@ -79,8 +79,3 @@ def __checkRecords(table:str) -> None:
     cursor.execute(f'SELECT * FROM {table}')
     print(cursor.fetchall())
     conn.close()
-
-
-if __name__ == '__main__':
-    #setupDatabase()
-    __checkRecords(table='legs_stats')
