@@ -41,7 +41,31 @@ def setupDatabase() -> None:
     conn.close()
 
 
+def insertMany(table:str, fields:tuple[str], data:list[tuple]) -> None:
+    """
+        Insert multiple records into database at once\n
+        Params:
+            table - Name of table to insert data into
+            fields - Fields of table to be inserted
+            data - Record data to insert
+        Returns:
+            None
+    """
+    try:
+        conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
+        cursor:sqlite3.Cursor = conn.cursor()
+
+        # Supports inserting data into tables that have variable number of columns
+        field_placeholder:str = ','.join(fields)
+        value_placeholder:str = ','.join('?' * len(fields))
+        cursor.executemany(f'INSERT INTO {table} ({field_placeholder}) VALUES ({value_placeholder})', data)
+    finally:
+        conn.commit()
+        cursor.close()
+
+
 def __checkTables() -> None:
+    """ Test function for checking tables have been created """
     conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
     cursor:sqlite3.Cursor = conn.cursor()
     cursor.execute("""SELECT name FROM sqlite_master WHERE type='table'""")
@@ -50,6 +74,7 @@ def __checkTables() -> None:
 
 
 def __checkRecords(table:str) -> None:
+    """ Test function for checking whether records added to table """
     conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
     cursor:sqlite3.Cursor = conn.cursor()
     cursor.execute(f'SELECT * FROM {table}')

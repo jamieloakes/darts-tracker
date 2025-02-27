@@ -1,4 +1,4 @@
-import src.utils as utils
+from modules import utils
 
 def printOptionMenu() -> None:
     """

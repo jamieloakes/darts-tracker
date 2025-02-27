@@ -1,8 +1,7 @@
-import src.db_setup as db_setup
-import src.menus as menus
+from src import database, menus
 
 if __name__ == '__main__':
-    db_setup.setupDatabase()
+    database.setupDatabase()
 
     while True:
         try:
