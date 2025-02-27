@@ -39,8 +39,8 @@ def doublesRtwMenu() -> None:
     while target_count < 21:
         try:
             target:str = f'D{target_count}'
-            attempts:int = int(input(f'{target}: '))
-            data.append((today, target, attempts))
+            hits:int = int(input(f'{target}: '))
+            data.append((today, target, hits))
             target_count += 1
         except:
             print('Invalid input. Please try again.')
