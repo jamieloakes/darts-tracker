@@ -12,13 +12,11 @@ if __name__ == '__main__':
                 case 1:
                     menus.singlesRtwMenu()
                 case 2:
-                    # Round the World (Doubles)
-                    pass
+                    menus.doublesRtwMenu()
                 case 3:
                     # 501
                     pass
                 case 0:
-                    # Quit
                     break
                 case _:
                     # Invalid input

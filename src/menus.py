@@ -1,4 +1,5 @@
 from modules import utils
+from src import database
 
 def printOptionMenu() -> None:
     """
@@ -30,7 +31,25 @@ def singlesRtwMenu() -> None:
             print('Invalid input. Please try again.')
             continue
     
-    utils.insertMany(table='singles_rtw', fields=('event_date', 'target', 'attempts'), data=data)
+    database.insertMany(table='singles_rtw', fields=('event_date', 'target', 'attempts'), data=data)
 
-if __name__ == '__main__':
-    singlesRtwMenu()
+
+def doublesRtwMenu() -> None:
+    """
+        Data capture menu for Round the World (Doubles) practice game
+    """
+    today:str = utils.getTodaysDate()
+    data:list[tuple[str, str, int]] = []
+
+    target_count:int = 1
+    while target_count < 21:
+        try:
+            target:str = f'D{target_count}'
+            attempts:int = int(input(f'{target}: '))
+            data.append((today, target, attempts))
+            target_count += 1
+        except:
+            print('Invalid input. Please try again.')
+            continue
+    
+    database.insertMany(table='doubles_rtw', fields=('event_date', 'target', 'hits'), data=data)

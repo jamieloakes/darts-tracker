@@ -48,8 +48,6 @@ def insertMany(table:str, fields:tuple[str], data:list[tuple]) -> None:
             table - Name of table to insert data into
             fields - Fields of table to be inserted
             data - Record data to insert
-        Returns:
-            None
     """
     try:
         conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
@@ -84,4 +82,4 @@ def __checkRecords(table:str) -> None:
 
 if __name__ == '__main__':
     #setupDatabase()
-    __checkRecords(table='singles_rtw')
+    __checkRecords(table='doubles_rtw')
