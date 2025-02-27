@@ -30,7 +30,7 @@ Each record is the outcome of hitting the required target on the dartboard.
 
 Contains data for the Doubles Round the World practice game.
 
-Each record is the outcome of throwing 9 darts at the required target on the dartboard. 
+Each record is the outcome of throwing 3 darts at the required target on the dartboard. 
 
 
 ### Fields:
