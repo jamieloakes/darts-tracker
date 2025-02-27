@@ -11,9 +11,9 @@ This is to analyse how my performance changes across time.
     - Only when the current single has been hit can the next single be attempted
     - Record how many attempts to hit each single number
 - Round the World (Doubles)
-    - Throw 9 darts at each double number on the dartboard in sequence (D1 -> D2 -> D3 etc.)
+    - Throw 3 darts at each double number on the dartboard in sequence (D1 -> D2 -> D3 etc.)
     - Record how many times hit each double number
-- 501 (First to 3 legs)
+- 501 (Best of 3 legs)
     - Score and checkout, starting from 501
     - Record key statistics from each leg:
         - Number of darts thrown
