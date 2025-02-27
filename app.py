@@ -18,7 +18,7 @@ if __name__ == '__main__':
                 case 0:
                     break
                 case _:
-                    # Raise ValueError if invalid input
+                    # If input is numeric but not valid option, raise ValueError
                     raise ValueError()
         except ValueError:
             print('Invalid option. Please try again.\n')
