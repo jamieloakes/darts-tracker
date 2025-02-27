@@ -43,18 +43,18 @@ def setupDatabase() -> None:
 
 def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
     """
-        Insert record into database\n
+        Insert record(s) into database\n
         Supports inserting either a single record, or multiple records\n
         Params:
             table - Name of table to insert data into
-            fields - Fields of table to be inserted
+            fields - Fields to be inserted
             data - Record data to insert
     """
     try:
         conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
         cursor:sqlite3.Cursor = conn.cursor()
 
-        # Supports inserting data into tables that have variable number of columns
+        # Create dynamic placeholders to support with inserting across tables with differing columns
         field_placeholder:str = ','.join(fields)
         value_placeholder:str = ','.join('?' * len(fields))
         cursor.executemany(f'INSERT INTO {table} ({field_placeholder}) VALUES ({value_placeholder})', data)
