@@ -30,3 +30,27 @@ Furthermore, the database is not fully normalised which was done for the below r
 - Data management wasn't predicted to be a major concern due to the small number of fields 
 - The savings in storage size from normalisation was not considered sufficient enough
 - Less normalised data makes it easier to query through the use of less joins
+
+
+## Data Entry
+
+The data entry was decided to be done via a Command Line Interface. The reasons for this include:
+- Less development work to set-up meaning faster time to be able to use tracker
+- Simplicity of data being recorded
+- This project is intended for personal use so no other end-users to support
+
+The data entry was set-up using a set of menus. This was done for two main benefits:
+- More modular approach allowing new practice games to be added easily
+- Able to break down each practice game into its own logic/functions
+
+The menus created are:
+- Main menu
+    - Initial screen to select other menus
+- Round the World (Singles)
+    - Menu/data entry form for Round the World (Singles) practice game
+- Round the World (Doubles)
+    - Menu/data entry form for Round the World (Doubles) practice game
+- 501
+    - Menu/data entry form for legs of 501
+
+To help with data validation, the inputs were wrapped in a Try/Except block within a While loop. This allowed the data to be re-inputted rather than the program stopping in case of a ValueError.
