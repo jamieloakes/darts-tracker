@@ -61,6 +61,8 @@ def legsStatsMenu() -> None:
             avg:float = float(input('avg: '))
             checkout_attempts:int = int(input('checkout_attempts: '))
             win:int = int(input('win: '))
+            if (win != 0) and (win != 1):
+                raise ValueError()
             data.append((today, n_darts, avg, checkout_attempts, win))
             completed = True
         except:
