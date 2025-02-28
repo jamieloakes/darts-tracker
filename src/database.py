@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import polars as pl
 
 def setupDatabase() -> None:
     """
@@ -61,6 +62,18 @@ def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
         conn.commit()
     finally:
         cursor.close()
+        conn.close()
+
+
+def queryDatabase(query:str) -> pl.DataFrame:
+    """ 
+        Perform SQL query against database and return data as Polars DataFrame\n
+        Params:
+            query - SQL query to run
+    """
+    with sqlite3.connect('practice_data.db') as conn:
+        return pl.read_database(query=query, connection=conn)
+    
 
 
 def __checkTables() -> None:
@@ -69,6 +82,7 @@ def __checkTables() -> None:
     cursor:sqlite3.Cursor = conn.cursor()
     cursor.execute("""SELECT name FROM sqlite_master WHERE type='table'""")
     print(cursor.fetchall())
+    cursor.close()
     conn.close()
 
 
@@ -78,4 +92,5 @@ def __checkRecords(table:str) -> None:
     cursor:sqlite3.Cursor = conn.cursor()
     cursor.execute(f'SELECT * FROM {table}')
     print(cursor.fetchall())
+    cursor.close()
     conn.close()
