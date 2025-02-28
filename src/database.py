@@ -78,9 +78,11 @@ def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
 
 def queryDatabase(query:str) -> pl.DataFrame:
     """ 
-        Perform SQL query against database and return data as Polars DataFrame\n
+        Perform SELECT query against database and return result\n
         Params:
             query - SQL query to run
+        Returns:
+            df - DataFrame containg result set of query
     """
     try:
         conn:sqlite3.Connection = connectToDatabase()
