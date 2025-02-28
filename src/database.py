@@ -46,6 +46,11 @@ def setupDatabase() -> None:
         conn.close()
 
 
+def connectToDatabase() -> sqlite3.Connection:
+    """ Centralised function for connecting to database """
+    return sqlite3.connect('practice_data.db')
+
+
 def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
     """
         Insert record(s) into database\n
@@ -56,7 +61,7 @@ def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
             data - Record data to insert
     """
     try:
-        conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
+        conn:sqlite3.Connection = connectToDatabase()
         cursor:sqlite3.Cursor = conn.cursor()
 
         # Create dynamic placeholders to support with inserting across tables with differing columns
@@ -78,7 +83,7 @@ def queryDatabase(query:str) -> pl.DataFrame:
             query - SQL query to run
     """
     try:
-        conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
+        conn:sqlite3.Connection = connectToDatabase()
         return pl.read_database(query=query, connection=conn)
     except Exception as e:
         print(e)
