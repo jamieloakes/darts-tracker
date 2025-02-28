@@ -1,7 +1,7 @@
 import sqlite3
 import argparse
 
-def checkRecords(table:str) -> None:
+def testTableRecords(table:str) -> None:
     """
         Test function for checking whether records added to table\n
         Params:
@@ -22,4 +22,4 @@ if  __name__ == '__main__':
     parser:argparse.ArgumentParser = argparse.ArgumentParser()
     parser.add_argument('table', help='Name of table to check records for', type=str)
     args:argparse.Namespace = parser.parse_args()
-    checkRecords(table=args.table)
+    testTableRecords(table=args.table)
