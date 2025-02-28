@@ -71,10 +71,12 @@ def queryDatabase(query:str) -> pl.DataFrame:
         Params:
             query - SQL query to run
     """
-    with sqlite3.connect('practice_data.db') as conn:
+    try:
+        conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
         return pl.read_database(query=query, connection=conn)
+    finally:
+        conn.close()
     
-
 
 def __checkTables() -> None:
     """ Test function for checking tables have been created """
