@@ -10,36 +10,40 @@ def setupDatabase() -> None:
     if os.path.exists('practice_data.db'):
         return
 
-    conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
-    cursor:sqlite3.Cursor = conn.cursor()
+    try:
+        conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
+        cursor:sqlite3.Cursor = conn.cursor()
 
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS singles_rtw (
-        event_id INTEGER PRIMARY KEY,
-        event_date TEXT NOT NULL,
-        target TEXT NOT NULL,
-        attempts INTEGER NOT NULL
-    ); """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS singles_rtw (
+            event_id INTEGER PRIMARY KEY,
+            event_date TEXT NOT NULL,
+            target TEXT NOT NULL,
+            attempts INTEGER NOT NULL
+        ); """)
 
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS doubles_rtw (
-        event_id INTEGER PRIMARY KEY,
-        event_date TEXT NOT NULL,
-        target TEXT NOT NULL,
-        hits INTEGER NOT NULL
-    ); """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS doubles_rtw (
+            event_id INTEGER PRIMARY KEY,
+            event_date TEXT NOT NULL,
+            target TEXT NOT NULL,
+            hits INTEGER NOT NULL
+        ); """)
 
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS legs_stats (
-        leg_id INTEGER PRIMARY KEY,
-        event_date TEXT NOT NULL,
-        n_darts INTEGER NOT NULL,
-        avg REAL NOT NULL,
-        checkout_attempts INTEGER NOT NULL,
-        win INTEGER NOT NULL
-    ); """)
-
-    conn.close()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS legs_stats (
+            leg_id INTEGER PRIMARY KEY,
+            event_date TEXT NOT NULL,
+            n_darts INTEGER NOT NULL,
+            avg REAL NOT NULL,
+            checkout_attempts INTEGER NOT NULL,
+            win INTEGER NOT NULL
+        ); """)
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
 
 
 def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
@@ -60,6 +64,8 @@ def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
         value_placeholder:str = ','.join('?' * len(fields))
         cursor.executemany(f'INSERT INTO {table} ({field_placeholder}) VALUES ({value_placeholder})', data)
         conn.commit()
+    except Exception as e:
+        print(e)
     finally:
         cursor.close()
         conn.close()
@@ -74,25 +80,7 @@ def queryDatabase(query:str) -> pl.DataFrame:
     try:
         conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
         return pl.read_database(query=query, connection=conn)
+    except Exception as e:
+        print(e)
     finally:
         conn.close()
-    
-
-def __checkTables() -> None:
-    """ Test function for checking tables have been created """
-    conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
-    cursor:sqlite3.Cursor = conn.cursor()
-    cursor.execute("""SELECT name FROM sqlite_master WHERE type='table'""")
-    print(cursor.fetchall())
-    cursor.close()
-    conn.close()
-
-
-def __checkRecords(table:str) -> None:
-    """ Test function for checking whether records added to table """
-    conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
-    cursor:sqlite3.Cursor = conn.cursor()
-    cursor.execute(f'SELECT * FROM {table}')
-    print(cursor.fetchall())
-    cursor.close()
-    conn.close()
