@@ -2,6 +2,7 @@ import sqlite3
 import os
 import polars as pl
 
+
 def setupDatabase() -> None:
     """
         Create database with required tables and fields\n
@@ -47,7 +48,11 @@ def setupDatabase() -> None:
 
 
 def connectToDatabase() -> sqlite3.Connection:
-    """ Centralised function for connecting to database """
+    """
+        Centralised function for connecting to database
+        Returns:
+            conn - Connection object to database
+    """
     return sqlite3.connect('practice_data.db')
 
 
