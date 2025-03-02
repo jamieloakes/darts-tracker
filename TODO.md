@@ -8,3 +8,6 @@
     - ~~Set-up 501 data capture~~
     - ~~Set-up writing to database~~
 - Set-up and configure analytics
+    - ~~Set-up Singles RTW analysis~~
+    - Set-up Doubles RTW analysis
+    - Set-up 501 legs analysis
