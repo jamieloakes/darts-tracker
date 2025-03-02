@@ -1,4 +1,5 @@
-from src import database, menus
+import src.database as database
+import src.menus as menus
 
 if __name__ == '__main__':
     database.setupDatabase()

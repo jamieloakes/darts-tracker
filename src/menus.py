@@ -1,5 +1,5 @@
-from modules import utils
-from src import database
+import modules.utils as utils
+import src.database as database
 
 def printOptionMenu() -> None:
     """ Display option screen for practice games """
