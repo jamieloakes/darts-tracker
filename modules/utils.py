@@ -1,6 +1,5 @@
 import datetime as dt
 import polars as pl
-import matplotlib.colors as mpl_colours
 
 
 def getTodaysDate() -> str:
