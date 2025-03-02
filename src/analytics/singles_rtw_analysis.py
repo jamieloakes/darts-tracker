@@ -11,7 +11,7 @@ query:str = """
             """
 
 
-def showTable():
+def attemptsTable():
     """
         Show table view of total attempts per target
     """
@@ -20,7 +20,7 @@ def showTable():
         print(df)
 
 
-def dartboardVis():
+def dartboardHeatmap():
     """
         Show dartboard and colour each target segment based on total attempts\n
         Darker colour means more attempts at target
@@ -42,4 +42,4 @@ def dartboardVis():
     
 
 if __name__ == '__main__':
-    dartboardVis()
+    dartboardHeatmap()
