@@ -34,7 +34,9 @@ def dartboardVis():
     
     fig, ax = plt.subplots()
     fig.set_size_inches(12,8)
-    ax.pie(x=values, labels=labels, colors=colours, startangle=81, textprops={'fontsize':16})
+    # Set each segment to 18 as this is the area for each target on the dartboard
+    # Set startangle=81 so that segments line up with 20 at the top
+    ax.pie(x=values, labels=labels, colors=colours, startangle=81, textprops={'fontsize':16}) 
     ax.set_title(label='Singles Round the World Performance', fontdict={'fontsize':18, 'weight':'bold'})
     plt.show()
     
