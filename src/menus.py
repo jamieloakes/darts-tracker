@@ -1,4 +1,4 @@
-import modules.utils as utils
+import src.utils as utils
 import src.database as database
 
 def printOptionMenu() -> None:

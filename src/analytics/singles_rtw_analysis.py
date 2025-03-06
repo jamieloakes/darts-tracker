@@ -2,7 +2,7 @@ import polars as pl
 import matplotlib.pyplot as plt
 
 import src.database as database
-import modules.utils as utils
+import src.utils as utils
 
 query:str = """ 
             SELECT target, SUM(attempts) AS total_attempts 
