@@ -54,3 +54,42 @@ The menus created are:
     - Menu/data entry form for legs of 501
 
 To help with data validation, the inputs were wrapped in a Try/Except block within a While loop. This allowed the data to be re-inputted rather than the program stopping in case of a ValueError.
+
+
+## Data Analysis
+
+The research questions for analysis were defined as:
+- Which singles typically require more attempts to hit?
+    - Use to improve scoring/setup play for problem targets
+- Which doubles are more favourable?
+    - Use to plan route for checkout
+    - Use to improve performance for problem targets
+- Is the current practice routine improving performance in 501?
+    - Increase in 3 Dart Average?
+    - Reduction in number of darts required to finish leg?
+        - Can be used as a proxy for 3 Dart Average
+    - Reduction in checkout attempts?
+
+Matplotlib was used to create the visualisations. This was for two reasons:
+- Extensive documentation and online support
+- Compatability with DataFrames in its plotting functions
+    - Results from database get read into a DataFrame meaning less work to prepare data
+
+The visualisations created were:
+- Round the World (Singles & Doubles)
+    - Data Table
+        - Show the raw data for the number of attempts/hits at each target
+        - Easy to understand and quickly assess performance
+    - Heatmap
+        - Visually show performance on actual dartboard
+            - Implemented using pie chart
+        - Format colour of each target relative to the number of attempts
+            - Singles: More attempts (i.e worse performance) means more vibrant colour
+            - Doubles: Less hits (i.e worse performance) means more vibrant colour
+        -  Easier to see specific problem areas of board (Top right, Bottom left etc.)
+
+To collate these graphs into a report, many different solutions were considered. One solution was using a HTML template and then converting this into PDF format. The concern with this was content spreading across pages affecting readability of the report.
+
+It was decided to use FPDF, a python library for creating PDFs, and embedding the PNGs of the graphs. This provided two main benefts:
+- Ability to manage and configure pages to ensure related content fits on a single page
+- Less work required to style report due to FPDF's built-in formatting functions
