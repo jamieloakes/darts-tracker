@@ -2,6 +2,14 @@ import sqlite3
 import os
 import polars as pl
 
+def connectToDatabase() -> sqlite3.Connection:
+    """
+        Centralised function for connecting to database
+        Returns:
+            conn - Connection object to database
+    """
+    return sqlite3.connect('practice_data.db')
+
 
 def setupDatabase() -> None:
     """
@@ -12,7 +20,7 @@ def setupDatabase() -> None:
         return
 
     try:
-        conn:sqlite3.Connection = sqlite3.connect('practice_data.db')
+        conn:sqlite3.Connection = connectToDatabase()
         cursor:sqlite3.Cursor = conn.cursor()
 
         cursor.execute("""
@@ -40,20 +48,9 @@ def setupDatabase() -> None:
             checkout_attempts INTEGER NOT NULL,
             win INTEGER NOT NULL
         ); """)
-    except Exception as e:
-        print(e)
     finally:
         cursor.close()
         conn.close()
-
-
-def connectToDatabase() -> sqlite3.Connection:
-    """
-        Centralised function for connecting to database
-        Returns:
-            conn - Connection object to database
-    """
-    return sqlite3.connect('practice_data.db')
 
 
 def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
@@ -74,8 +71,6 @@ def insertRecords(table:str, fields:tuple[str], data:list[tuple]) -> None:
         value_placeholder:str = ','.join('?' * len(fields))
         cursor.executemany(f'INSERT INTO {table} ({field_placeholder}) VALUES ({value_placeholder})', data)
         conn.commit()
-    except Exception as e:
-        print(e)
     finally:
         cursor.close()
         conn.close()
@@ -92,7 +87,5 @@ def queryDatabase(query:str) -> pl.DataFrame:
     try:
         conn:sqlite3.Connection = connectToDatabase()
         return pl.read_database(query=query, connection=conn)
-    except Exception as e:
-        print(e)
     finally:
         conn.close()

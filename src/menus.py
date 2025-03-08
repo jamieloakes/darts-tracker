@@ -23,7 +23,7 @@ def singlesRtwMenu() -> None:
             attempts:int = int(input(f'{target}: '))
             data.append((today, target, attempts))
             target_count += 1
-        except:
+        except ValueError:
             print('Invalid input. Please try again.')
             continue
     print()
@@ -40,9 +40,11 @@ def doublesRtwMenu() -> None:
         try:
             target:str = f'D{target_count}'
             hits:int = int(input(f'{target}: '))
+            if hits > 3:
+                raise ValueError
             data.append((today, target, hits))
             target_count += 1
-        except:
+        except ValueError:
             print('Invalid input. Please try again.')
             continue
     print()
@@ -65,7 +67,7 @@ def legsStatsMenu() -> None:
                 raise ValueError()
             data.append((today, n_darts, avg, checkout_attempts, win))
             completed = True
-        except:
+        except ValueError:
             print('Invalid input. Please try again.')
             continue
     print()
