@@ -1,6 +1,6 @@
 import datetime as dt
 import polars as pl
-
+import math
 
 def getTodaysDate() -> str:
     """ Returns today's date in YYYY-MM-DD format """
@@ -30,3 +30,15 @@ def conditionalFormatter(df:pl.DataFrame, y_col:str, labels:list[str], reverse:b
     # Filter using list comprehension to maintain order relative to labels
     colours:list[tuple[int,int,int,float]] = [(1, 0, 0, df.filter(pl.col('target')==label).select('alpha_value').item()) for label in labels]
     return colours
+
+
+def scaleYAxis(x:float, base:float) -> float:
+    """
+        Get max value for scaling y-axis\n
+        Params:
+            x - Max value of y-axis data
+            base - Multiple to round nearest to
+        Returns:
+            y_scaler - Maximum value for y axis on plot
+    """
+    return round(base * math.ceil(x/base),2)
