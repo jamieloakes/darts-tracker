@@ -71,7 +71,6 @@ def timeSeriesAnalysis() -> None:
     ).sort(by='week_commencing')
 
     fig = make_subplots(specs=[[{'secondary_y': True}]])
-
     fig.add_trace(
          go.Scatter(x=aggregated.get_column('week_commencing'),
                     y=aggregated.get_column('scoring_avg'),
@@ -80,7 +79,6 @@ def timeSeriesAnalysis() -> None:
                     name='scoring_avg'),
          secondary_y=False
     )
-
     fig.add_trace(
          go.Scatter(x=aggregated.get_column('week_commencing'),
                     y=aggregated.get_column('checkout_percentage'),
@@ -89,6 +87,7 @@ def timeSeriesAnalysis() -> None:
          secondary_y=True
     )
     
+
     # Set legend and plot area formatting
     fig.update_layout(legend={'x':0.5,
                               'y':1.2,
@@ -98,7 +97,6 @@ def timeSeriesAnalysis() -> None:
                             },
                         plot_bgcolor='#E1E0E0'
                     )
-
     fig.update_xaxes(title_text='week_commencing', type='category', tickangle=-45) # Convert x-axis to categorical to avoid date interpolation
     fig.update_traces(texttemplate='%{y}', textposition='bottom center') # Add data labels
 
