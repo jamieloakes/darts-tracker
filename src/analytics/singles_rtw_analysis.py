@@ -5,7 +5,7 @@ import numpy as np
 import src.database as database
 
 
-def attemptsTable():
+def summaryTable():
     """ Create table view of total attempts per target and save as .png """
     query:str = """
                 SELECT target, attempts
@@ -53,38 +53,39 @@ def dartboardHeatmap() -> None:
         More vibrant colour means more attempts at target\n
     """
     query:str = """ 
-            SELECT target, SUM(attempts) AS total_attempts 
-            FROM singles_rtw
-            GROUP BY target
-            ORDER BY total_attempts
-            """
+                SELECT target, SUM(attempts) AS total_attempts 
+                FROM singles_rtw
+                GROUP BY target
+                ORDER BY total_attempts
+                """
     df:pl.DataFrame = database.queryDatabase(query=query)
     labels:list[str] = ['S20', 'S5', 'S12', 'S9', 'S14', 'S11', 'S8', 'S16', 'S7', 'S19',
                         'S3', 'S17', 'S2', 'S15', 'S10', 'S6', 'S13', 'S4', 'S18', 'S1']
 
-    r:np.array = np.repeat(a=1,repeats=20)
-    theta:np.array = np.arange(0,360,18)
+    r:np.array = np.repeat(a=1,repeats=20) # Controls length of bar
+    theta:np.array = np.arange(0,360,18) # Controls segments in graph
+    # Order values in same order as labels to ensure correct colour scaling
     values:list[int] = [df.filter(pl.col('target')==label).select('total_attempts').item() for label in labels]
 
     fig = go.Figure(
         go.Barpolar(
             r=r,
             theta=theta,
-            marker={'color':values,'colorscale':'OrRd', 'showscale':True}
+            marker={'color':values,'colorscale':'OrRd', 'showscale':True, 'colorbar_title_text':'attempts'}
         )
     )
 
     fig.update_layout(
-        polar={'angularaxis':{
-            'rotation':89,
-            'direction':'counterclockwise',
-            'tickmode':'array',
-            'tickvals':theta,
-            'ticktext':labels
-        },
-        'radialaxis':{
-            'visible':False
+            polar={'angularaxis':{
+                'rotation':89, # Ensures that 20 is at top of board
+                'direction':'counterclockwise',
+                'tickmode':'array',
+                'tickvals':theta,
+                'ticktext':labels
+            },
+            'radialaxis':{
+                'visible':False
+            }
         }
-        },
     )
     fig.write_image('./src/analytics/charts/singles_rtw_heatmap.png')
