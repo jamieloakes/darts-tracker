@@ -1,50 +1,90 @@
 import polars as pl
-import matplotlib.pyplot as plt
-import src.database as database
-import src.utils as utils
+import plotly.graph_objects as go
+import numpy as np
 
-query:str = """ 
-            SELECT target, SUM(hits) AS total_hits 
-            FROM doubles_rtw
-            GROUP BY target
-            ORDER BY total_hits DESC
-            """
+import src.database as database
 
 
 def hitsTable():
     """ Create table view of total hits per target and save as .png """
+    query:str = """
+                SELECT target, hits
+                FROM doubles_rtw
+                """
     df:pl.DataFrame = database.queryDatabase(query=query)
-    fig, ax = plt.subplots()
-    fig.set_size_inches(8,8)
-    ax.axis('off')
+    df = df.group_by('target').agg(
+        pl.sum('hits').alias('total_hits'),
+        pl.quantile(column='hits', quantile=0.25).alias('25th_perc'),
+        pl.median('hits').alias('median'),
+        pl.quantile(column='hits', quantile=0.75).alias('75th_perc'),
+    ).sort(by='total_hits', descending=True)
 
-    table = plt.table(cellText=df.to_pandas(), loc='center', cellLoc='center')
-    table.set_fontsize(size=16)
-    table.scale(1,2)
+    fig = go.Figure(
+        data=[go.Table(
+        header=dict(
+            values=df.columns,
+            line_color='darkslategrey',
+            fill_color='#90E0EF',
+            align='center',
+            font={'size':18, 'color':'black'},
+            height=50
+        ),
+        cells=dict(values=[df['target'],
+                            df['total_hits'],
+                            df['25th_perc'],
+                            df['median'],
+                            df['75th_perc']
+                        ],
+                    line_color='darkslategrey',
+                    fill_color='#CAF0F8',
+                    align='center',
+                    font={'size':16, 'color':'black', 'style':'italic'},
+                    height=27
+        )
+        )]
+    )
+    fig.update_layout(width=900, height=800)
+    fig.write_image('./src/analytics/charts/doubles_rtw_table.png')
 
-    plt.savefig('./src/analytics/charts/doubles_rtw_table.png')
 
-
-def dartboardHeatmap():
+def dartboardHeatmap() -> None:
     """
         Create dartboard visualsation and and save as .png\n
         More vibrant colour means less hits at target\n
     """
+    query:str = """ 
+                SELECT target, SUM(hits) AS total_hits 
+                FROM doubles_rtw
+                GROUP BY target
+                ORDER BY total_hits
+                """
     df:pl.DataFrame = database.queryDatabase(query=query)
-
-    values:list[int] = [360 / 20 for i in range(20)]
     labels:list[str] = ['D20', 'D5', 'D12', 'D9', 'D14', 'D11', 'D8', 'D16', 'D7', 'D19',
                         'D3', 'D17', 'D2', 'D15', 'D10', 'D6', 'D13', 'D4', 'D18', 'D1']
-    colours:list[tuple[int,int,int]] = utils.conditionalFormatter(df=df, y_col='total_hits', labels=labels, reverse=True)
-    
-    fig, ax = plt.subplots()
-    fig.set_size_inches(12,8)
-    # Set each segment to 18 as this is the area for each target on the dartboard
-    # Set startangle=81 so that segments line up with 20 at the top
-    plt.pie(x=values, labels=labels, colors=colours, startangle=81, textprops={'fontsize':16}) 
 
-    plt.savefig('./src/analytics/charts/doubles_rtw_heatmap.png')
-    
+    r:np.array = np.repeat(a=1,repeats=20)
+    theta:np.array = np.arange(0,360,18)
+    values:list[int] = [df.filter(pl.col('target')==label).select('total_hits').item() for label in labels]
 
-if __name__ == '__main__':
-    hitsTable()
+    fig = go.Figure(
+        go.Barpolar(
+            r=r,
+            theta=theta,
+            marker={'color':values,'colorscale':'OrRd', 'showscale':True, 'reversescale':True, 'colorbar_title_text':'hits'},
+        ),
+    )
+
+    fig.update_layout(
+            polar={'angularaxis':{
+                'rotation':89,
+                'direction':'counterclockwise',
+                'tickmode':'array',
+                'tickvals':theta,
+                'ticktext':labels
+            },
+            'radialaxis':{
+                'visible':False
+            }
+        }
+    )
+    fig.write_image('./src/analytics/charts/doubles_rtw_heatmap.png')
