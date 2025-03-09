@@ -18,8 +18,7 @@ def summaryTable() -> None:
                 FROM legs_stats
                 """
     df:pl.DataFrame = database.queryDatabase(query=query)
-
-    aggregated:pl.DataFrame = df.select(
+    df:pl.DataFrame = df.select(
         pl.count('n_darts').alias('legs'),
         pl.median('n_darts', 'scoring_avg'),
         (pl.sum('win') / pl.sum('checkout_attempts')).round(2).alias('checkout_percentage'),
@@ -29,18 +28,18 @@ def summaryTable() -> None:
     fig = go.Figure(
          data=[go.Table(
             header=dict(
-                values=aggregated.columns,
+                values=df.columns,
                 line_color='darkslategrey',
                 fill_color='#90E0EF',
                 align='center',
                 font={'size':18, 'color':'black'},
                 height=50
             ),
-            cells=dict(values=[aggregated['legs'],
-                                aggregated['n_darts'],
-                                aggregated['scoring_avg'],
-                                aggregated['checkout_percentage'],
-                                aggregated['win_percentage']],
+            cells=dict(values=[df['legs'],
+                                df['n_darts'],
+                                df['scoring_avg'],
+                                df['checkout_percentage'],
+                                df['win_percentage']],
                         line_color='darkslategrey',
                         fill_color='#CAF0F8',
                         align='center',
@@ -68,7 +67,7 @@ def timeSeriesAnalysis() -> None:
     aggregated:pl.DataFrame = df.group_by('week_commencing').agg(
         pl.median('scoring_avg'),
         (pl.sum('win') / pl.sum('checkout_attempts')).round(2).alias('checkout_percentage')
-    ).sort(by='week_commencing')
+    ).sort('week_commencing', descending=False)
 
     fig = make_subplots(specs=[[{'secondary_y': True}]])
     fig.add_trace(
