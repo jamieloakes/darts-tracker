@@ -5,7 +5,7 @@ import numpy as np
 import src.database as database
 
 
-def hitsTable():
+def summaryTable():
     """ Create table view of total hits per target and save as .png """
     query:str = """
                 SELECT target, hits
@@ -62,9 +62,10 @@ def dartboardHeatmap() -> None:
     labels:list[str] = ['D20', 'D5', 'D12', 'D9', 'D14', 'D11', 'D8', 'D16', 'D7', 'D19',
                         'D3', 'D17', 'D2', 'D15', 'D10', 'D6', 'D13', 'D4', 'D18', 'D1']
 
-    r:np.array = np.repeat(a=1,repeats=20)
-    theta:np.array = np.arange(0,360,18)
-    values:list[int] = [df.filter(pl.col('target')==label).select('total_hits').item() for label in labels]
+    r:np.array = np.repeat(a=1,repeats=20) # Controls length of bar
+    theta:np.array = np.arange(0,360,18) # Controls segments in graph
+    # Order values in same order as labels to ensure correct colour scaling
+    values:list[int] = [df.filter(pl.col('target')==label).select('total_hits').item() for label in labels]  
 
     fig = go.Figure(
         go.Barpolar(
@@ -76,7 +77,7 @@ def dartboardHeatmap() -> None:
 
     fig.update_layout(
             polar={'angularaxis':{
-                'rotation':89,
+                'rotation':89, # Ensures that 20 is at top of board
                 'direction':'counterclockwise',
                 'tickmode':'array',
                 'tickvals':theta,
