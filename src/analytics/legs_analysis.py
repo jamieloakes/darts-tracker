@@ -1,7 +1,5 @@
 import polars as pl
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-import plotly.express as px
 from plotly.subplots import make_subplots
 
 import src.database as database
