@@ -70,23 +70,37 @@ The research questions for analysis were defined as:
         - Can be used as a proxy for 3 Dart Average
     - Reduction in checkout attempts?
 
-Matplotlib was used to create the visualisations. This was for two reasons:
-- Extensive documentation and online support
-- Compatability with DataFrames in its plotting functions
-    - Results from database get read into a DataFrame meaning less work to prepare data
+Matplotlib was initially used to create the visualisations however problems occured when trying to create table visualisations. After doing some research on alternative plotting modules, Plotly was decided upon for the below reasons:
+- Dedicated Table visualisation
+- Compatability with Polars Dataframes
+- Easier formatting for styling graphs
 
 The visualisations created were:
 - Round the World (Singles & Doubles)
     - Data Table
-        - Show the raw data for the number of attempts/hits at each target
-        - Easy to understand and quickly assess performance
+        - Show the raw data for the number of attempts/hits at each target and distribution
+        - Easy to understand and quickly assess current performance
     - Heatmap
         - Visually show performance on actual dartboard
-            - Implemented using pie chart
+            - Implemented using polar chart
         - Format colour of each target relative to the number of attempts
             - Singles: More attempts (i.e worse performance) means more vibrant colour
             - Doubles: Less hits (i.e worse performance) means more vibrant colour
         -  Easier to see specific problem areas of board (Top right, Bottom left etc.)
+- 501 Legs
+    - Summary Table
+        - Quick breakdown of stats to assess current performance
+            - Total number of legs
+            - Median number of darts thrown
+            - Median scoring average
+            - Overall checkout rate
+            - Overall win rate
+        - Median used to be less skewed from outliers (one-off good/bad games)
+    - Time Series
+        - Breakdown of scoring average and checkout rate per week
+            - Three dart average includes attempts at double so can skew performance
+            - Separation of scoring and checkouts allow for analysis of each in isolation
+        - See how performance changes across time to assess whether improvements have been observed
 
 To collate these graphs into a report, many different solutions were considered. One solution was using a HTML template and then converting this into PDF format. The concern with this was content spreading across pages affecting readability of the report.
 
