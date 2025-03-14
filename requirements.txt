@@ -1,5 +1,10 @@
+defusedxml==0.7.1
+fonttools==4.56.0
+fpdf2==2.8.2
+kaleido==0.2.1
 narwhals==1.29.1
 numpy==2.2.3
 packaging==24.2
+pillow==11.1.0
 plotly==6.0.0
 polars==1.24.0
