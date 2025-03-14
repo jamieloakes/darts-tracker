@@ -20,7 +20,7 @@ def createCharts() -> None:
 
 
 def introduction(pdf_obj:FPDF, date:str) -> None:
-    """ Introduction page for report """
+    """ Add Introduction page """
     pdf_obj.add_page(orientation='portrait', format='A4')
     # Title
     pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
@@ -53,11 +53,11 @@ def introduction(pdf_obj:FPDF, date:str) -> None:
     pdf_obj.multi_cell(w=0, text='- Page 3: Singles RTW Heatmap\n')
     pdf_obj.multi_cell(w=0, text='- Page 4: Doubles RTW Summary Table\n')
     pdf_obj.multi_cell(w=0, text='- Page 5: Doubles RTW Heatmap\n')
-    pdf_obj.multi_cell(w=0, text='- Page 6: 501 Summary Table\n')
-    pdf_obj.multi_cell(w=0, text='- Page 7: 501 Time Series Analysis\n')
+    pdf_obj.multi_cell(w=0, text='- Page 6: 501 Summary Table & Time Series Analysis\n')
 
 
-def singles_analysis(pdf_obj:FPDF) -> None:
+def singlesAnalysis(pdf_obj:FPDF) -> None:
+    """ Add Singles RTW analysis pages """
     pdf_obj.add_page(orientation='landscape', format='A3')
     pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
     pdf_obj.cell(text='Round the World (Singles) Data Table', center=True)
@@ -69,6 +69,28 @@ def singles_analysis(pdf_obj:FPDF) -> None:
     pdf_obj.image(name='src/analytics/charts/singles_rtw_heatmap.png', x=Align.C, y=22, w=400, h=290)
 
 
+def doublesAnalysis(pdf_obj:FPDF) -> None:
+    """ Add Doubles RTW analysis pages """
+    pdf_obj.add_page(orientation='landscape', format='A3')
+    pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
+    pdf_obj.cell(text='Round the World (Doubles) Data Table', center=True)
+    pdf_obj.image(name='src/analytics/charts/doubles_rtw_table.png', x=Align.C, y=22)
+
+    pdf_obj.add_page(orientation='landscape', format='A3')
+    pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
+    pdf_obj.cell(text='Round the World (Doubles) Heatmap', center=True)
+    pdf_obj.image(name='src/analytics/charts/doubles_rtw_heatmap.png', x=Align.C, y=22, w=400, h=290)
+
+
+def legsAnalysis(pdf_obj:FPDF) -> None:
+    """ Add 501 Legs analysis page """
+    pdf_obj.add_page(orientation='landscape', format='A3')
+    pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
+    pdf_obj.cell(text='501 Legs Analysis', center=True)
+    pdf_obj.image(name='src/analytics/charts/501_summary_table.png', x=Align.C, y=22)
+    pdf_obj.image(name='src/analytics/charts/501_timeseries.png', x=Align.C, y=105)
+
+
 def generateReport() -> None:
     """ Main function for generating report """
     createCharts()
@@ -76,10 +98,8 @@ def generateReport() -> None:
     pdf_obj:FPDF = FPDF()
     
     introduction(pdf_obj=pdf_obj, date=today)
-    singles_analysis(pdf_obj=pdf_obj)
+    singlesAnalysis(pdf_obj=pdf_obj)
+    doublesAnalysis(pdf_obj=pdf_obj)
+    legsAnalysis(pdf_obj=pdf_obj)
 
-    pdf_obj.output(name=f'report_{today}.pdf')
-
-
-if __name__ == '__main__':
-    generateReport()
+    pdf_obj.output(name=f'reports/report_{today}.pdf')
