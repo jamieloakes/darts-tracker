@@ -1,4 +1,4 @@
-from fpdf import FPDF
+from fpdf import FPDF, Align
 
 import src.analytics.singles_rtw_analysis as singles
 import src.analytics.doubles_rtw_analysis as doubles
@@ -57,6 +57,18 @@ def introduction(pdf_obj:FPDF, date:str) -> None:
     pdf_obj.multi_cell(w=0, text='- Page 7: 501 Time Series Analysis\n')
 
 
+def singles_analysis(pdf_obj:FPDF) -> None:
+    pdf_obj.add_page(orientation='landscape', format='A3')
+    pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
+    pdf_obj.cell(text='Round the World (Singles) Data Table', center=True)
+    pdf_obj.image(name='src/analytics/charts/singles_rtw_table.png', x=Align.C, y=22)
+
+    pdf_obj.add_page(orientation='landscape', format='A3')
+    pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
+    pdf_obj.cell(text='Round the World (Singles) Heatmap', center=True)
+    pdf_obj.image(name='src/analytics/charts/singles_rtw_heatmap.png', x=Align.C, y=22, w=400, h=290)
+
+
 def generateReport() -> None:
     """ Main function for generating report """
     createCharts()
@@ -64,6 +76,7 @@ def generateReport() -> None:
     pdf_obj:FPDF = FPDF()
     
     introduction(pdf_obj=pdf_obj, date=today)
+    singles_analysis(pdf_obj=pdf_obj)
 
     pdf_obj.output(name=f'report_{today}.pdf')
 
