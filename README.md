@@ -30,14 +30,13 @@ This is to analyse how my performance changes across time.
 - Increase number of legs won
 
 
-## Baseline Performance Stats
-- Figures as of 14/03/2025:
-    - n_darts_avg = 51
-    - scoring_avg = 37.58
-    - checkout_percentage = 7%
-    - Singles RTW:
-        - Best = S16
-        - Worst = S12
-    - Doubles RTW:
-        - Best = D12
-        - Worst = D10
+## Baseline Performance Stats (As of 14/03/2025)
+- n_darts_avg = 51
+- scoring_avg = 37.58
+- checkout_percentage = 7%
+- Singles RTW:
+    - Best = S16
+    - Worst = S12
+- Doubles RTW:
+    - Best = D12
+    - Worst = D10
