@@ -25,6 +25,6 @@ This is to analyse how my performance changes across time.
 ## Performance Objectives
 - Reduce number of attempts to hit each single number
 - Increase number of hits for each double number
-- Increase three dart average
+- Increase three dart average/scoring average
 - Increase checkout percentage
 - Increase number of legs won
