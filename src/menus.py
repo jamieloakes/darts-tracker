@@ -8,6 +8,7 @@ def printOptionMenu() -> None:
     print('1: Round the World (Singles)')
     print('2: Round the World (Doubles)')
     print('3: 501')
+    print('4: Report')
     print('0: Quit')
 
 
