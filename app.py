@@ -1,5 +1,6 @@
 import src.database as database
 import src.menus as menus
+import src.analytics.report as report
 
 if __name__ == '__main__':
     database.setupDatabase()
@@ -16,6 +17,8 @@ if __name__ == '__main__':
                     menus.doublesRtwMenu()
                 case 3:
                     menus.legsStatsMenu()
+                case 4:
+                    report.generateReport()
                 case 0:
                     break
                 case _:
