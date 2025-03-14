@@ -11,4 +11,4 @@
     - ~~Set-up Singles RTW analysis~~
     - ~~Set-up Doubles RTW analysis~~
     - ~~Set-up 501 legs analysis~~
-    - Set-up report creation
+    - ~~Set-up report creation~~
