@@ -30,7 +30,7 @@ def introduction(pdf_obj:FPDF, date:str) -> None:
     pdf_obj.set_font(family='Helvetica', size=TEXT_SIZE)
     pdf_obj.multi_cell(w=0, text='This report contains analysis of my darts practice routine.\n')
     pdf_obj.multi_cell(w=0, text='The data was gathered from the practice_data.db database, and visualisations created showing performance against the objectives of each game.\n')
-    pdf_obj.multi_cell(w=0, text='Plotly was used to create the visualisations due to its dedicated table visualisation and easy chart formatting\n')
+    pdf_obj.multi_cell(w=0, text='Plotly was used to create the visualisations due to its dedicated table visualisation and easy chart formatting.\n')
 
 
     # Analysis Objectives
