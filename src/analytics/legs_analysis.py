@@ -16,7 +16,7 @@ def summaryTable() -> None:
                 FROM legs_stats
                 """
     df:pl.DataFrame = database.queryDatabase(query=query)
-    df:pl.DataFrame = df.select(
+    df = df.select(
         pl.count('n_darts').alias('legs'),
         pl.median('n_darts', 'scoring_avg'),
         (pl.sum('win') / pl.sum('checkout_attempts')).round(2).alias('checkout_percentage'),
@@ -61,24 +61,24 @@ def timeSeriesAnalysis() -> None:
                 FROM legs_stats
                 """
     df:pl.DataFrame = database.queryDatabase(query=query)
-
-    aggregated:pl.DataFrame = df.group_by('week_commencing').agg(
+    df = df.group_by('week_commencing').agg(
         pl.median('scoring_avg'),
         (pl.sum('win') / pl.sum('checkout_attempts')).round(2).alias('checkout_percentage')
     ).sort('week_commencing', descending=False)
 
+
     fig = make_subplots(specs=[[{'secondary_y': True}]])
     fig.add_trace(
-         go.Scatter(x=aggregated.get_column('week_commencing'),
-                    y=aggregated.get_column('scoring_avg'),
+         go.Scatter(x=df.get_column('week_commencing'),
+                    y=df.get_column('scoring_avg'),
                     mode='lines+markers+text',
                     line={'dash':'dash'},
                     name='scoring_avg'),
          secondary_y=False
     )
     fig.add_trace(
-         go.Scatter(x=aggregated.get_column('week_commencing'),
-                    y=aggregated.get_column('checkout_percentage'),
+         go.Scatter(x=df.get_column('week_commencing'),
+                    y=df.get_column('checkout_percentage'),
                     mode='lines+markers+text',
                     name='checkout_percentage'),
          secondary_y=True
@@ -97,13 +97,13 @@ def timeSeriesAnalysis() -> None:
     fig.update_xaxes(title_text='week_commencing', type='category', tickangle=-45) # Convert x-axis to categorical to avoid date interpolation
     fig.update_traces(texttemplate='%{y}', textposition='bottom center') # Add data labels
 
-    ax1_top:float = utils.scaleYAxis(x=aggregated.get_column('scoring_avg').max(), base=10)
+    ax1_top:float = utils.scaleYAxis(x=df.get_column('scoring_avg').max(), base=10)
     fig.update_yaxes(title_text='scoring_avg',
                      range=[0,ax1_top],
                      showgrid=False,
                      secondary_y=False)
     
-    ax2_top:float = utils.scaleYAxis(x=aggregated.get_column('checkout_percentage').max(), base=0.1)
+    ax2_top:float = utils.scaleYAxis(x=df.get_column('checkout_percentage').max(), base=0.1)
     fig.update_yaxes(title_text='checkout_percentage',
                      range=[0,ax2_top],
                      secondary_y=True)

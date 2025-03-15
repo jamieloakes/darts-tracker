@@ -42,7 +42,7 @@ def doublesRtwMenu() -> None:
             target:str = f'D{target_count}'
             hits:int = int(input(f'{target}: '))
             if hits > 3:
-                raise ValueError
+                raise ValueError()
             data.append((today, target, hits))
             target_count += 1
         except ValueError:

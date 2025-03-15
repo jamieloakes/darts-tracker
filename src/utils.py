@@ -1,5 +1,4 @@
 import datetime as dt
-import polars as pl
 import math
 
 def getTodaysDate() -> str:

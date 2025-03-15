@@ -4,7 +4,7 @@ import polars as pl
 
 def connectToDatabase() -> sqlite3.Connection:
     """
-        Centralised function for connecting to database
+        Centralised function for connecting to database\n
         Returns:
             conn - Connection object to database
     """

@@ -22,7 +22,6 @@ def createCharts() -> None:
 def introduction(pdf_obj:FPDF, date:str) -> None:
     """ Add Introduction page """
     pdf_obj.add_page(orientation='portrait', format='A4')
-    # Title
     pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
     pdf_obj.multi_cell(w=0, padding=(3,0,0,0), text=f'Darts Practice Report {date}\n')
 
@@ -31,7 +30,6 @@ def introduction(pdf_obj:FPDF, date:str) -> None:
     pdf_obj.multi_cell(w=0, text='This report contains analysis of my darts practice routine.\n')
     pdf_obj.multi_cell(w=0, text='The data was gathered from the practice_data.db database, and visualisations created showing performance against the objectives of each game.\n')
     pdf_obj.multi_cell(w=0, text='Plotly was used to create the visualisations due to its dedicated table visualisation and easy chart formatting.\n')
-
 
     # Analysis Objectives
     pdf_obj.set_font(family='Helvetica', size=H2_SIZE, style='B')
@@ -43,7 +41,6 @@ def introduction(pdf_obj:FPDF, date:str) -> None:
     pdf_obj.multi_cell(w=0, text='- Improve scoring average\n')
     pdf_obj.multi_cell(w=0, text='- Improve checkout percentage\n')
     pdf_obj.multi_cell(w=0, text='- Increase number of legs won\n')
-
 
     # Table of Contents
     pdf_obj.set_font(family='Helvetica', size=H2_SIZE, style='B')
@@ -95,11 +92,10 @@ def generateReport() -> None:
     """ Main function for generating report """
     createCharts()
     today:str = utils.getTodaysDate()
+
     pdf_obj:FPDF = FPDF()
-    
     introduction(pdf_obj=pdf_obj, date=today)
     singlesAnalysis(pdf_obj=pdf_obj)
     doublesAnalysis(pdf_obj=pdf_obj)
     legsAnalysis(pdf_obj=pdf_obj)
-
     pdf_obj.output(name=f'reports/report_{today}.pdf')
