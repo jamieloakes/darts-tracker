@@ -30,7 +30,7 @@ This is to analyse how my performance changes across time.
 - Increase number of legs won
 
 
-## Baseline Performance Stats (As of 14/03/2025)
+## Baseline Performance Stats (as of 14/03/2025)
 - n_darts_avg = 51
 - scoring_avg = 37.58
 - checkout_percentage = 7%
