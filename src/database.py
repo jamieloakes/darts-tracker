@@ -26,6 +26,7 @@ def setupDatabase() -> None:
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS singles_rtw (
             event_id INTEGER PRIMARY KEY,
+            game_id TEXT NOT NULL,
             event_date TEXT NOT NULL,
             target TEXT NOT NULL,
             attempts INTEGER NOT NULL
@@ -34,6 +35,7 @@ def setupDatabase() -> None:
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS doubles_rtw (
             event_id INTEGER PRIMARY KEY,
+            game_id TEXT NOT NULL,
             event_date TEXT NOT NULL,
             target TEXT NOT NULL,
             hits INTEGER NOT NULL
