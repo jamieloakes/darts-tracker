@@ -1,5 +1,6 @@
 import src.utils as utils
 import src.database as database
+import uuid
 
 def printOptionMenu() -> None:
     """ Display option screen for practice games """
@@ -16,25 +17,27 @@ def singlesRtwMenu() -> None:
     """ Data capture menu for Round the World (Singles) practice game """
     today:str = utils.getTodaysDate()
     data:list[tuple[str, str, int]] = []
+    game_id:str = str(uuid.uuid4)
 
     target_count:int = 1
     while target_count < 21:
         try:
             target:str = f'S{target_count}'
             attempts:int = int(input(f'{target}: '))
-            data.append((today, target, attempts))
+            data.append((game_id, today, target, attempts))
             target_count += 1
         except ValueError:
             print('Invalid input. Please try again.')
             continue
+    database.insertRecords(table='singles_rtw', fields=('game_id', 'event_date', 'target', 'attempts'), data=data)
     print()
-    database.insertRecords(table='singles_rtw', fields=('event_date', 'target', 'attempts'), data=data)
 
 
 def doublesRtwMenu() -> None:
     """ Data capture menu for Round the World (Doubles) practice game """
     today:str = utils.getTodaysDate()
     data:list[tuple[str, str, int]] = []
+    game_id:str = str(uuid.uuid4)
 
     target_count:int = 1
     while target_count < 21:
@@ -43,13 +46,13 @@ def doublesRtwMenu() -> None:
             hits:int = int(input(f'{target}: '))
             if hits > 3:
                 raise ValueError()
-            data.append((today, target, hits))
+            data.append((game_id, today, target, hits))
             target_count += 1
         except ValueError:
             print('Invalid input. Please try again.')
             continue
+    database.insertRecords(table='doubles_rtw', fields=('game_id', 'event_date', 'target', 'hits'), data=data)
     print()
-    database.insertRecords(table='doubles_rtw', fields=('event_date', 'target', 'hits'), data=data)
 
 
 def legsStatsMenu() -> None:
@@ -71,5 +74,5 @@ def legsStatsMenu() -> None:
         except ValueError:
             print('Invalid input. Please try again.')
             continue
-    print()
     database.insertRecords(table='legs_stats', fields=('event_date', 'n_darts', 'avg', 'checkout_attempts', 'win'), data=data)
+    print()
