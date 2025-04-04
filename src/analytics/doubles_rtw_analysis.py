@@ -14,7 +14,7 @@ def distribution():
                 GROUP BY game_id
                 """
     df:pl.DataFrame = database.queryDatabase(query=query)
-    nbins:int = int(np.ceil(df.select(pl.max('total_hits') - pl.min('total_hits')).item() / 3))
+    nbins:int = int(np.ceil(df.select(pl.max('total_hits') - pl.min('total_hits')).item() / 1))
     fig = px.histogram(data_frame=df, x='total_hits', nbins=nbins)
 
     median:int = df.select(pl.median('total_hits')).item()
@@ -25,9 +25,9 @@ def distribution():
 
     q3:float = df.select(pl.quantile('total_hits',0.75)).item()
     fig.add_vline(x=q3, line_width=3, line_dash='dash', line_color='red')
-
-    fig.update_xaxes(range=[30, 100])
-    fig.update_layout(width=900, height=500, bargap=0.1)
+    
+    fig.update_xaxes(range=[0, 10])
+    fig.update_layout(width=900, height=500, bargap=0.02)
     fig.write_image('./src/analytics/charts/doubles_rtw_dist.png')
 
 
