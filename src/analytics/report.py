@@ -11,9 +11,9 @@ TEXT_SIZE:int = 14 # Text size for normal text
 
 def createCharts() -> None:
     """ Create and save all charts """
-    singles.summaryTable()
+    singles.distribution()
     singles.dartboardHeatmap()
-    doubles.summaryTable()
+    doubles.distribution()
     doubles.dartboardHeatmap()
     legs.summaryTable()
     legs.timeSeriesAnalysis()
