@@ -46,9 +46,9 @@ def introduction(pdf_obj:FPDF, date:str) -> None:
     pdf_obj.set_font(family='Helvetica', size=H2_SIZE, style='B')
     pdf_obj.multi_cell(w=0, padding=(12,0,0,0), text='Table of Contents\n')
     pdf_obj.set_font(family='Helvetica', size=TEXT_SIZE)
-    pdf_obj.multi_cell(w=0, text='- Page 2: Singles RTW Summary Table\n')
+    pdf_obj.multi_cell(w=0, text='- Page 2: Singles RTW Distribution\n')
     pdf_obj.multi_cell(w=0, text='- Page 3: Singles RTW Heatmap\n')
-    pdf_obj.multi_cell(w=0, text='- Page 4: Doubles RTW Summary Table\n')
+    pdf_obj.multi_cell(w=0, text='- Page 4: Doubles RTW Distribution\n')
     pdf_obj.multi_cell(w=0, text='- Page 5: Doubles RTW Heatmap\n')
     pdf_obj.multi_cell(w=0, text='- Page 6: 501 Summary Table & Time Series Analysis\n')
 
