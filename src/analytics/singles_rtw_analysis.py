@@ -1,50 +1,34 @@
 import polars as pl
 import plotly.graph_objects as go
+import plotly.express as px
 import numpy as np
 
 import src.database as database
 
 
-def summaryTable():
-    """ Create table view of total attempts per target and save as .png """
+def distribution():
+    """ Show histogram of total attempts per game and save as .png """
     query:str = """
-                SELECT target, attempts
+                SELECT game_id, SUM(attempts) AS total_attempts
                 FROM singles_rtw
+                GROUP BY game_id
                 """
     df:pl.DataFrame = database.queryDatabase(query=query)
-    df = df.group_by('target').agg(
-        pl.sum('attempts').alias('total_attempts'),
-        pl.quantile(column='attempts', quantile=0.25).alias('25th_perc'),
-        pl.median('attempts').alias('median'),
-        pl.quantile(column='attempts', quantile=0.75).alias('75th_perc'),
-    ).sort(by='total_attempts', descending=False)
+    nbins:int = int(np.ceil(df.select(pl.max('total_attempts') - pl.min('total_attempts')).item() / 3))
+    fig = px.histogram(data_frame=df, x='total_attempts', nbins=nbins)
 
-    fig = go.Figure(
-        data=[go.Table(
-        header=dict(
-            values=df.columns,
-            line_color='darkslategrey',
-            fill_color='#90E0EF',
-            align='center',
-            font={'size':18, 'color':'black'},
-            height=50
-        ),
-        cells=dict(values=[df['target'],
-                            df['total_attempts'],
-                            df['25th_perc'],
-                            df['median'],
-                            df['75th_perc']
-                        ],
-                    line_color='darkslategrey',
-                    fill_color='#CAF0F8',
-                    align='center',
-                    font={'size':16, 'color':'black', 'style':'italic'},
-                    height=27
-        )
-        )]
-    )
-    fig.update_layout(width=900, height=800)
-    fig.write_image('./src/analytics/charts/singles_rtw_table.png')
+    median:int = df.select(pl.median('total_attempts')).item()
+    fig.add_vline(x=median, line_width=3, line_dash='solid', line_color='red')
+
+    q1:float = df.select(pl.quantile('total_attempts',0.25)).item()
+    fig.add_vline(x=q1, line_width=3, line_dash='dash', line_color='red')
+
+    q3:float = df.select(pl.quantile('total_attempts',0.75)).item()
+    fig.add_vline(x=q3, line_width=3, line_dash='dash', line_color='red')
+
+    fig.update_xaxes(range=[30, 100])
+    fig.update_layout(width=900, height=500, bargap=0.1)
+    fig.write_image('./src/analytics/charts/singles_rtw_dist.png')
 
 
 def dartboardHeatmap() -> None:
