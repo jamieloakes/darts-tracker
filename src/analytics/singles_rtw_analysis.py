@@ -27,7 +27,7 @@ def distribution():
     fig.add_vline(x=q3, line_width=3, line_dash='dash', line_color='red')
 
     fig.update_xaxes(range=[30, 100])
-    fig.update_layout(width=900, height=500, bargap=0.1)
+    fig.update_layout(width=900, height=500, bargap=0.02)
     fig.write_image('./src/analytics/charts/singles_rtw_dist.png')
 
 
