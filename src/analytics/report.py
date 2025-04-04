@@ -57,8 +57,8 @@ def singlesAnalysis(pdf_obj:FPDF) -> None:
     """ Add Singles RTW analysis pages """
     pdf_obj.add_page(orientation='landscape', format='A3')
     pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
-    pdf_obj.cell(text='Round the World (Singles) Data Table', center=True)
-    pdf_obj.image(name='src/analytics/charts/singles_rtw_table.png', x=Align.C, y=22)
+    pdf_obj.cell(text='Round the World (Singles) Distribution', center=True)
+    pdf_obj.image(name='src/analytics/charts/singles_rtw_dist.png', x=Align.C, y=22, w=400, h=250)
 
     pdf_obj.add_page(orientation='landscape', format='A3')
     pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
@@ -70,8 +70,8 @@ def doublesAnalysis(pdf_obj:FPDF) -> None:
     """ Add Doubles RTW analysis pages """
     pdf_obj.add_page(orientation='landscape', format='A3')
     pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
-    pdf_obj.cell(text='Round the World (Doubles) Data Table', center=True)
-    pdf_obj.image(name='src/analytics/charts/doubles_rtw_table.png', x=Align.C, y=22)
+    pdf_obj.cell(text='Round the World (Doubles) Distribution', center=True)
+    pdf_obj.image(name='src/analytics/charts/doubles_rtw_dist.png', x=Align.C, y=22, w=400, h=250)
 
     pdf_obj.add_page(orientation='landscape', format='A3')
     pdf_obj.set_font(family='Helvetica', size=H1_SIZE, style='B')
