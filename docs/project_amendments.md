@@ -5,7 +5,7 @@ This document aims to provide context and reasoning behind the amendments made a
 
 ## Database Schema
 
-## game_id Field
+### game_id Field
 
 To support with viewing the distribution for each of the Round the World practice games, a game_id field was added to the respective tables.
 
@@ -21,7 +21,7 @@ The steps to make this change included:
 
 ## Data Analysis
 
-# Round the World Distribution
+### Round the World Distribution
 
 With the changes made in the database schema, a new visualisation was created for the report for the Round the World pages. This new visualisation provided insight into the distribution of attempts/hits to assess overall performance.
 
